@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import sqlite as sq
 
 app = Flask(__name__)
 CORS(app)
@@ -7,10 +8,11 @@ app.config['JSON_AS_ASCII'] = False
 
 @app.route('/', methods=['GET'])
 def top():
-    json = {
-        'response' : 'json'
-    }
-    return jsonify(json)
+    sqlite = sq.Sqlite()
+    sqlite.create_connection('database.db')
+    s = sqlite.task_select('SELECT * FROM trains') 
+    text = "".join(map(str, s))
+    return text
 
 @app.route('/map/mapping', methods=['GET'])
 def mapMapping():
@@ -91,3 +93,4 @@ def testAPI():
 
 if __name__ == "__main__":
     app.run(debug=True)    
+    #app.run(host='64.4.160.36',port=5000)
