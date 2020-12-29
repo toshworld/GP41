@@ -10,7 +10,7 @@ app.config['JSON_AS_ASCII'] = False
 def top():
     sqlite = sq.Sqlite()
     sqlite.create_connection('database.db')
-    s = sqlite.task_select('SELECT * FROM trains') 
+    s = sqlite.task_select('SELECT * FROM Train_lines') 
     text = "".join(map(str, s))
     return text
 
@@ -90,6 +90,30 @@ def testAPI():
         }
     }    
     return jsonify(json)    
+
+@app.route('/mather/advice', methods=['GET'])
+def mother():
+    user_id = request.args.get('user_id')
+    voice_id = request.args.get('voice_id')
+    latitude = request.args.get('latitude')
+    hours_quit = request.args.get('hours_quit')
+    hours_enter = request.args.get('hours_enter')
+    #function
+    previous_location = ['時','時']
+    now_location = ['時','時']
+    advice = ['おはよう','はよ起きや！','ええかげん起きろ！']
+    directions = ['歩き','80%','20分']
+    pref_activity = ['アクティビティ名','80%']
+    next_activity = ['アクティビティ名','80%']
+    json = {
+        'previous_location' : previous_location,
+        'now_location' : now_location,
+        'directions' : directions,
+        'prefactivity': pref_activity,
+        'nextactivity' : next_activity,
+        'advice' : advice
+    }
+    return jsonify(json) 
 
 if __name__ == "__main__":
     app.run(debug=True)    
