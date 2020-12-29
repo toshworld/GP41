@@ -91,7 +91,7 @@ def testAPI():
     }    
     return jsonify(json)    
 
-@app.route('/mather/advice', methods=['GET'])
+@app.route('/mother/advice', methods=['GET'])
 def mother():
     user_id = request.args.get('user_id')
     voice_id = request.args.get('voice_id')
